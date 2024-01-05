@@ -1,0 +1,8 @@
+{
+    "client_id": "9b02ad9abae34785b8dff7e68838e549",
+    "client_secret": "56bff1cb5b0c4e039feca7c98a02a091",
+    "base_url": "https://api.spotify.com",
+    "token_url": "https://accounts.spotify.com/api/token",
+    "api_version": "v1",
+    "spotify_search_api_url": "https://api.spotify.com/v1/search?q=isrc:%s&type=track"
+}
