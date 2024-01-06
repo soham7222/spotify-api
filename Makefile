@@ -8,7 +8,7 @@ install_deps:
 	go mod vendor
 
 build_local:
-	go build .
+	go build cmd/main.go
 
 test_local:
 	go test ./... -p=1 -count=1
