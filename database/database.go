@@ -16,13 +16,6 @@ func Initialize() *sql.DB {
 		panic(fmt.Errorf("error in while opening the connection: %w", err))
 	}
 
-	defer func() {
-		err = db.Close()
-		if err != nil {
-			panic(fmt.Errorf("Can't close connection: ", err))
-		}
-	}()
-
 	err = db.Ping()
 	if err != nil {
 		panic(fmt.Errorf("error pinging db: %w", err))

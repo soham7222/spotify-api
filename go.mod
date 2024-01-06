@@ -2,8 +2,6 @@ module spotify-api
 
 go 1.21
 
-toolchain go1.21.5
-
 require (
 	github.com/bitly/go-simplejson v0.5.1
 	github.com/gin-gonic/gin v1.9.1

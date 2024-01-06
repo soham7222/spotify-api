@@ -2,7 +2,7 @@ package controller
 
 import (
 	"net/http"
-	"spotify-api/spotify/save/model"
+	"spotify-api/spotify/save/model/request"
 	"spotify-api/spotify/save/service"
 
 	"github.com/gin-gonic/gin"
@@ -23,15 +23,16 @@ func NewController(service service.Service) Controller {
 }
 
 func (c controller) Save(context *gin.Context) {
-	request := model.SaveSongRequest{}
-	if bindErr := context.ShouldBindJSON(&request); bindErr != nil {
+	req := request.SaveSongRequest{}
+	if bindErr := context.ShouldBindJSON(&req); bindErr != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, nil)
 	}
 
-	response, err := c.service.FetchFromSpotify(context, request.ISRC)
+	response, err := c.service.FetchFromSpotifyAndInsertIntoDB(context, req.ISRC)
 
 	if err != nil {
 		context.AbortWithStatusJSON(err.HttpStatusCode, err)
+		return
 	}
-	context.JSON(http.StatusOK, response)
+	context.JSON(http.StatusCreated, response)
 }
