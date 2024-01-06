@@ -18,6 +18,3 @@ test_local_with_coverage:
 
 generate_swagger:
 	swag init
-
-start_db:
-	docker-compose up -d

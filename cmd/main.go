@@ -2,6 +2,7 @@ package main
 
 import (
 	"spotify-api/config"
+	"spotify-api/database"
 	"spotify-api/middleware"
 	"spotify-api/spotify/save/controller"
 	"spotify-api/spotify/save/service"
@@ -15,14 +16,16 @@ const CONFIG_PATH = "../config/config.json"
 func main() {
 	r := gin.Default()
 
+	_ = database.Initialize()
+
 	config, err := config.Load(CONFIG_PATH)
 	if err != nil {
 		panic("error while loading the config" + err.Error())
 	}
 
-	r.Use(middleware.AuthMiddleware(config))
-
 	request := gorequest.New()
+
+	r.Use(middleware.AuthMiddleware(config, request))
 	service := service.NewService(request, config)
 
 	controller := controller.NewController(service)

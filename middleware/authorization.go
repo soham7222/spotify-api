@@ -10,10 +10,9 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
-func AuthMiddleware(config config.Config) gin.HandlerFunc {
+func AuthMiddleware(config config.Config, request *gorequest.SuperAgent) gin.HandlerFunc {
 	return func(context *gin.Context) {
 		bearerToken := fmt.Sprintf("Basic %s", getEncodedKeys(config))
-		request := gorequest.New()
 		request.Post(config.GetTokenIssuerUrl())
 		request.Set("Authorization", bearerToken)
 		request.Send("grant_type=client_credentials")
