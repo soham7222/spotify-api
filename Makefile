@@ -1,5 +1,5 @@
 run_local:
-	go run main.go
+	go run cmd/main.go
 
 install_deps:
 	go get ./...
