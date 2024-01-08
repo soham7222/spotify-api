@@ -6,8 +6,7 @@ import (
 	"spotify-api/constants"
 	"spotify-api/database"
 	"spotify-api/middleware"
-	readRouter "spotify-api/spotify/read/router"
-	saveRouter "spotify-api/spotify/save/router"
+	"spotify-api/router"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,8 +24,6 @@ func main() {
 	client := &http.Client{}
 	r.Use(middleware.AuthMiddleware(config, client))
 
-	saveRouter.Init(r, db, config, client)
-	readRouter.Init(r, db, config)
-
+	router.Init(r, db, config, client)
 	r.Run()
 }

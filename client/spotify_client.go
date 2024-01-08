@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"spotify-api/client/model"
 	"spotify-api/config"
-	"spotify-api/spotify/client/model"
 
 	"github.com/gin-gonic/gin"
 )

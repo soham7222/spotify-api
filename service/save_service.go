@@ -2,16 +2,16 @@ package service
 
 import (
 	"fmt"
+	"spotify-api/client"
 	"spotify-api/error"
-	"spotify-api/spotify/client"
-	"spotify-api/spotify/save/model/response"
-	"spotify-api/spotify/save/repository"
+	"spotify-api/model/response"
+	"spotify-api/repository"
 	"strings"
 
 	"github.com/gin-gonic/gin"
 )
 
-//go:generate mockgen -source=save_service.go -destination=../../../mocks/mock_save_service.go -package=mocks
+//go:generate mockgen -source=save_service.go -destination=../mocks/mock_save_service.go -package=mocks
 type SaveService interface {
 	FetchFromSpotifyAndInsertIntoDB(context *gin.Context, isrc string) (response.CreateSongResponse, *error.ErrorResponse)
 }

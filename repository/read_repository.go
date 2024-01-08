@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"spotify-api/spotify/common/dto"
-	"spotify-api/spotify/read/model"
+	"spotify-api/dto"
+	"spotify-api/model"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,7 +15,7 @@ const (
 	SelectTracksByISRC   = "SELECT * FROM TRACK_DETAILS WHERE ISRC=:1"
 )
 
-//go:generate mockgen -source=read_repository.go -destination=../../../mocks/mock_read_repository.go -package=mocks
+//go:generate mockgen -source=read_repository.go -destination=../mocks/mock_read_repository.go -package=mocks
 type ReadRepository interface {
 	SelectTracksByArtist(ctx *gin.Context, artist string) ([]model.TrackDetailsResponse, error)
 	SelectTracksByISRC(ctx *gin.Context, artist string) ([]model.TrackDetailsResponse, error)

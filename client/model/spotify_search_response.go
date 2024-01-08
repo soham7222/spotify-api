@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/json"
-	"spotify-api/spotify/common/dto"
+	"spotify-api/dto"
 )
 
 type TracksSearchResponse struct {

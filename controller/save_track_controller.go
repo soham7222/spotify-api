@@ -3,8 +3,8 @@ package controller
 import (
 	"net/http"
 	"spotify-api/error"
-	"spotify-api/spotify/save/model/request"
-	"spotify-api/spotify/save/service"
+	"spotify-api/model/request"
+	"spotify-api/service"
 
 	"github.com/gin-gonic/gin"
 )

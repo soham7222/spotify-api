@@ -2,7 +2,7 @@ package controller
 
 import (
 	"net/http"
-	"spotify-api/spotify/read/service"
+	"spotify-api/service"
 
 	"github.com/gin-gonic/gin"
 )

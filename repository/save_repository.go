@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-	"spotify-api/spotify/common/dto"
+	"spotify-api/dto"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +12,7 @@ const (
 	Insert = "INSERT into TRACK_DETAILS (ISRC, TITLE, IMG_URI, ARTISTS) VALUES (:1, :2, :3, :4)"
 )
 
-//go:generate mockgen -source=save_repository.go -destination=../../../mocks/mock_save_repository.go -package=mocks
+//go:generate mockgen -source=save_repository.go -destination=../mocks/mock_save_repository.go -package=mocks
 type SaveRepository interface {
 	Insert(ctx *gin.Context, track dto.TrackDbModel) (int64, error)
 }
