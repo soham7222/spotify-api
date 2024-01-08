@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"spotify-api/constants"
 
 	_ "github.com/godror/godror"
 	"github.com/joho/godotenv"
@@ -26,9 +27,9 @@ func Initialize() *sql.DB {
 }
 
 func generateConnectionString() string {
-	err := godotenv.Load("../.envrc")
+	err := godotenv.Load(constants.ENV_FILE_LOCATION)
 	if err != nil {
-		panic(fmt.Errorf("Error loading .envrc file", err))
+		panic(fmt.Errorf("Error loading .envrc file: %v", err))
 	}
 
 	dbHost := os.Getenv("DB_HOST")

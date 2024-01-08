@@ -1,3 +1,5 @@
+export ORACLE_PASSWORD=<your password>
+
 run_local:
 	go run cmd/main.go
 
@@ -18,3 +20,6 @@ test_local_with_coverage:
 
 generate_swagger:
 	swag init
+
+start_db:
+	docker run -d -p 1521:1521 -e ORACLE_PASSWORD=$(ORACLE_PASSWORD) -v oracle-volume:/opt/oracle/oradata gvenzl/oracle-xe

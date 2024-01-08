@@ -1,0 +1,55 @@
+package controller
+
+import (
+	"net/http"
+	"spotify-api/spotify/read/service"
+
+	"github.com/gin-gonic/gin"
+)
+
+type Controller interface {
+	GetTracksByArtist(context *gin.Context)
+	GetTrackByISRC(context *gin.Context)
+}
+
+type controller struct {
+	service service.Service
+}
+
+func NewController(service service.Service) Controller {
+	return controller{
+		service: service,
+	}
+}
+
+func (c controller) GetTracksByArtist(context *gin.Context) {
+	artist := context.Param("artist")
+	res, err := c.service.SelectTracksByArtist(context, artist)
+	if err != nil {
+		context.AbortWithStatusJSON(err.HttpStatusCode, err)
+		return
+	}
+
+	if res == nil {
+		context.AbortWithStatusJSON(http.StatusNotFound, err)
+		return
+	}
+
+	context.JSON(http.StatusOK, res)
+}
+
+func (c controller) GetTrackByISRC(context *gin.Context) {
+	isrc := context.Param("isrc")
+	res, err := c.service.SelectTracksByISRC(context, isrc)
+	if err != nil {
+		context.AbortWithStatusJSON(err.HttpStatusCode, err)
+		return
+	}
+
+	if res == nil {
+		context.AbortWithStatusJSON(http.StatusNotFound, err)
+		return
+	}
+
+	context.JSON(http.StatusOK, res)
+}

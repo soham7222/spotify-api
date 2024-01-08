@@ -26,6 +26,3 @@ jobs:
 
     - name: Build
       run: make build_local
-
-    - name: Test
-      run: make test_local

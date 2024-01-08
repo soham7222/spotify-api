@@ -2,7 +2,7 @@ package model
 
 import (
 	"encoding/json"
-	"spotify-api/spotify/save/dto"
+	"spotify-api/spotify/common/dto"
 )
 
 type TracksSearchResponse struct {
@@ -40,17 +40,17 @@ type TrackExternalIds struct {
 
 func (res TracksSearchResponse) TransformToDbModel(isrc string) dto.TrackDbModel {
 	mostPopularTrack := res.getTheMostPopularTrack()
-	metaData := dto.TrackMetaData{
-		ImgURI: mostPopularTrack.getImageUri(),
-		Title:  mostPopularTrack.Name,
+	artistData := dto.TrackArtistsData{
 		Artist: mostPopularTrack.getArtists(),
 	}
 
-	data, _ := json.Marshal(metaData)
+	data, _ := json.Marshal(artistData)
 
 	return dto.TrackDbModel{
-		Isrc:     isrc,
-		Metadata: string(data),
+		Isrc:    isrc,
+		Artists: string(data),
+		ImgURI:  mostPopularTrack.getImageUri(),
+		Title:   mostPopularTrack.Name,
 	}
 }
 
@@ -82,7 +82,7 @@ func (track TracksDetailsItem) getImageUri() string {
 }
 
 func (track TracksDetailsItem) getArtists() []string {
-	result := make([]string, len(track.Artists))
+	result := make([]string, 0)
 
 	if len(track.Artists) > 0 {
 		for _, item := range track.Artists {

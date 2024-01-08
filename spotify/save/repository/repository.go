@@ -3,13 +3,13 @@ package repository
 import (
 	"database/sql"
 	"fmt"
-	"spotify-api/spotify/save/dto"
+	"spotify-api/spotify/common/dto"
 
 	"github.com/gin-gonic/gin"
 )
 
 const (
-	Insert = "INSERT into TRACK_DETAILS (ISRC, METADATA) VALUES (:1, :2)"
+	Insert = "INSERT into TRACK_DETAILS (ISRC, TITLE, IMG_URI, ARTISTS) VALUES (:1, :2, :3, :4)"
 )
 
 type Repository interface {
@@ -27,7 +27,7 @@ func NewRepository(db *sql.DB) Repository {
 }
 
 func (r repository) Insert(ctx *gin.Context, track dto.TrackDbModel) (int64, error) {
-	res, err := r.db.ExecContext(ctx.Request.Context(), Insert, track.Isrc, track.Metadata)
+	res, err := r.db.ExecContext(ctx.Request.Context(), Insert, track.Isrc, track.Title, track.ImgURI, track.Artists)
 	if err != nil {
 		fmt.Errorf("error while inserting record %v", err)
 		return 0, err
