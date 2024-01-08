@@ -7,22 +7,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Controller interface {
+type ReadController interface {
 	GetTracksByArtist(context *gin.Context)
 	GetTrackByISRC(context *gin.Context)
 }
 
-type controller struct {
-	service service.Service
+type readController struct {
+	service service.ReadService
 }
 
-func NewController(service service.Service) Controller {
-	return controller{
+func NewReadController(service service.ReadService) ReadController {
+	return readController{
 		service: service,
 	}
 }
 
-func (c controller) GetTracksByArtist(context *gin.Context) {
+func (c readController) GetTracksByArtist(context *gin.Context) {
 	artist := context.Param("artist")
 	res, err := c.service.SelectTracksByArtist(context, artist)
 	if err != nil {
@@ -38,7 +38,7 @@ func (c controller) GetTracksByArtist(context *gin.Context) {
 	context.JSON(http.StatusOK, res)
 }
 
-func (c controller) GetTrackByISRC(context *gin.Context) {
+func (c readController) GetTrackByISRC(context *gin.Context) {
 	isrc := context.Param("isrc")
 	res, err := c.service.SelectTracksByISRC(context, isrc)
 	if err != nil {

@@ -9,16 +9,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Controller interface {
+type SaveController interface {
 	Save(context *gin.Context)
 }
 
-type controller struct {
-	service service.Service
+type saveController struct {
+	service service.SaveService
 }
 
-func NewController(service service.Service) Controller {
-	return controller{
+func NewSaveController(service service.SaveService) SaveController {
+	return saveController{
 		service: service,
 	}
 }
@@ -34,7 +34,7 @@ func NewController(service service.Service) Controller {
 // @Failure      400  {object}  error.ErrorResponse
 // @Failure      500  {object}  error.ErrorResponse
 // @Router       /api/spotify/track [post]
-func (c controller) Save(context *gin.Context) {
+func (c saveController) Save(context *gin.Context) {
 	req := request.SaveSongRequest{}
 	if bindErr := context.ShouldBindJSON(&req); bindErr != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, error.SpotyfyErrors[error.BadFormattedJSONError])

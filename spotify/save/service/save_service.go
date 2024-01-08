@@ -14,27 +14,28 @@ import (
 	"github.com/parnurzeal/gorequest"
 )
 
-type Service interface {
+//go:generate mockgen -source=save_service.go -destination=../../../mocks/mock_save_service.go -package=mocks
+type SaveService interface {
 	FetchFromSpotifyAndInsertIntoDB(context *gin.Context, isrc string) (response.CreateSongResponse, *error.ErrorResponse)
 }
 
-type service struct {
+type saveService struct {
 	request    *gorequest.SuperAgent
 	config     config.Config
-	repository repository.Repository
+	repository repository.SaveRepository
 }
 
-func NewService(request *gorequest.SuperAgent,
+func NewSaveService(request *gorequest.SuperAgent,
 	config config.Config,
-	repository repository.Repository) Service {
-	return &service{
+	repository repository.SaveRepository) SaveService {
+	return &saveService{
 		request:    request,
 		config:     config,
 		repository: repository,
 	}
 }
 
-func (service service) FetchFromSpotifyAndInsertIntoDB(context *gin.Context, isrc string) (response.CreateSongResponse, *error.ErrorResponse) {
+func (service saveService) FetchFromSpotifyAndInsertIntoDB(context *gin.Context, isrc string) (response.CreateSongResponse, *error.ErrorResponse) {
 	service.request.Get(fmt.Sprintf(service.config.GetSpotifySearchApi(), isrc))
 	bearerToken := "Bearer " + context.Request.Header.Get("Authorization")
 	service.request.Set("Authorization", bearerToken)

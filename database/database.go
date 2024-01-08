@@ -22,7 +22,7 @@ func Initialize() *sql.DB {
 		panic(fmt.Errorf("error pinging db: %w", err))
 	}
 
-	fmt.Println("database got successfully connected")
+	fmt.Println("oracle database got successfully connected")
 	return db
 }
 

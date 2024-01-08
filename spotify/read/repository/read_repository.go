@@ -15,22 +15,23 @@ const (
 	SelectTracksByISRC   = "SELECT * FROM TRACK_DETAILS WHERE ISRC=:1"
 )
 
-type Repository interface {
+//go:generate mockgen -source=read_repository.go -destination=../../../mocks/mock_read_repository.go -package=mocks
+type ReadRepository interface {
 	SelectTracksByArtist(ctx *gin.Context, artist string) ([]model.TrackDetailsResponse, error)
 	SelectTracksByISRC(ctx *gin.Context, artist string) ([]model.TrackDetailsResponse, error)
 }
 
-type repository struct {
+type readRepository struct {
 	db *sql.DB
 }
 
-func NewRepository(db *sql.DB) Repository {
-	return &repository{
+func NewReadRepository(db *sql.DB) ReadRepository {
+	return &readRepository{
 		db: db,
 	}
 }
 
-func (r repository) SelectTracksByArtist(ctx *gin.Context, artist string) ([]model.TrackDetailsResponse, error) {
+func (r readRepository) SelectTracksByArtist(ctx *gin.Context, artist string) ([]model.TrackDetailsResponse, error) {
 	rows, err := r.db.Query(SelectTracksByArtist, artist)
 	if err != nil {
 		fmt.Errorf("error fetching db: %w", err)
@@ -41,7 +42,7 @@ func (r repository) SelectTracksByArtist(ctx *gin.Context, artist string) ([]mod
 	return serializeSqlRowData(rows)
 }
 
-func (r repository) SelectTracksByISRC(ctx *gin.Context, isrc string) ([]model.TrackDetailsResponse, error) {
+func (r readRepository) SelectTracksByISRC(ctx *gin.Context, isrc string) ([]model.TrackDetailsResponse, error) {
 	rows, err := r.db.Query(SelectTracksByISRC, isrc)
 	if err != nil {
 		fmt.Errorf("error fetching db: %w", err)

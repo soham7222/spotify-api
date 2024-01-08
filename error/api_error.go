@@ -21,7 +21,7 @@ var SpotyfyErrors = map[ErrorCode]*ErrorResponse{
 	InternalServerError:   NewErrorResponse(http.StatusInternalServerError, InternalServerError, "internal server error"),
 	BadFormattedJSONError: NewErrorResponse(http.StatusBadRequest, BadFormattedJSONError, "malformed json"),
 	DBInsertionError:      NewErrorResponse(http.StatusInternalServerError, DBInsertionError, "db insertion failed"),
-	DupliacteISRCError:    NewErrorResponse(http.StatusConflict, DupliacteISRCError, "duplicate record, isrc already exists"),
+	DupliacteISRCError:    NewErrorResponse(http.StatusBadRequest, DupliacteISRCError, "duplicate record, isrc already exists"),
 }
 
 func NewErrorResponse(statusCode int, errorCode ErrorCode, errorDescription string) *ErrorResponse {

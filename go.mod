@@ -7,16 +7,20 @@ toolchain go1.21.5
 require (
 	github.com/bitly/go-simplejson v0.5.1
 	github.com/gin-gonic/gin v1.9.1
+	github.com/golang/mock v1.6.0
 	github.com/joho/godotenv v1.5.1
 	github.com/parnurzeal/gorequest v0.2.16
 	github.com/sijms/go-ora/v2 v2.8.5
+	github.com/stretchr/testify v1.8.4
 )
 
 require (
 	github.com/chenzhuoyu/iasm v0.9.1 // indirect
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/godror/knownpb v0.1.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
+	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.11.0 // indirect
 	golang.org/x/exp v0.0.0-20240103183307-be819d1f06fc // indirect
 	golang.org/x/sync v0.5.0 // indirect

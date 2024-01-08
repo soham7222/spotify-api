@@ -12,9 +12,9 @@ import (
 )
 
 func Init(r *gin.Engine, db *sql.DB, config config.Config, request *gorequest.SuperAgent) {
-	repository := repository.NewRepository(db)
-	service := service.NewService(repository)
-	controller := controller.NewController(service)
+	repository := repository.NewReadRepository(db)
+	service := service.NewReadService(repository)
+	controller := controller.NewReadController(service)
 
 	authRouter := r.Group("/api/spotify")
 	authRouterGroup := authRouter.Group("/")

@@ -31,6 +31,7 @@ func AuthMiddleware(config config.Config, request *gorequest.SuperAgent) gin.Han
 
 		token, _ := jsToken.String()
 		context.Request.Header.Add("Authorization", token)
+		fmt.Println("User got authorised. Token has been issued and added to the Authorization header")
 		context.Next()
 	}
 }

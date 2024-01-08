@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+//go:generate mockgen -source=config.go -destination=../mocks/mock_config.go -package=mocks
 type Config interface {
 	GetClientId() string
 	GetClientSecretKey() string
