@@ -38,6 +38,7 @@ func (c saveController) Save(context *gin.Context) {
 	req := request.SaveSongRequest{}
 	if bindErr := context.ShouldBindJSON(&req); bindErr != nil {
 		context.AbortWithStatusJSON(http.StatusBadRequest, error.SpotyfyErrors[error.BadFormattedJSONError])
+		return
 	}
 
 	response, err := c.service.FetchFromSpotifyAndInsertIntoDB(context, req.ISRC)

@@ -2,18 +2,20 @@ package router
 
 import (
 	"database/sql"
+	"net/http"
 	"spotify-api/config"
+	"spotify-api/spotify/client"
 	"spotify-api/spotify/save/controller"
 	"spotify-api/spotify/save/repository"
 	"spotify-api/spotify/save/service"
 
 	"github.com/gin-gonic/gin"
-	"github.com/parnurzeal/gorequest"
 )
 
-func Init(r *gin.Engine, db *sql.DB, config config.Config, request *gorequest.SuperAgent) {
+func Init(r *gin.Engine, db *sql.DB, config config.Config, httpClient *http.Client) {
 	repository := repository.NewSaveRepository(db)
-	service := service.NewSaveService(request, config, repository)
+	spotifyClient := client.NewSpotifyClient(httpClient, config)
+	service := service.NewSaveService(repository, spotifyClient)
 
 	controller := controller.NewSaveController(service)
 

@@ -15,6 +15,7 @@ const (
 	BadFormattedJSONError ErrorCode = "ERR_SPOTIFY_BAD_FORMATTED_JSON_ERROR"
 	DBInsertionError      ErrorCode = "ERR_SPOTIFY_DB_INSERTION_FAILURE_ERROR"
 	DupliacteISRCError    ErrorCode = "ERR_SPOTIFY_DUPLICATE_ISRC_ERROR"
+	NoTrackExistsError    ErrorCode = "ERR_SPOTIFY_TRACK_NOT_FOUND"
 )
 
 var SpotyfyErrors = map[ErrorCode]*ErrorResponse{
@@ -22,6 +23,7 @@ var SpotyfyErrors = map[ErrorCode]*ErrorResponse{
 	BadFormattedJSONError: NewErrorResponse(http.StatusBadRequest, BadFormattedJSONError, "malformed json"),
 	DBInsertionError:      NewErrorResponse(http.StatusInternalServerError, DBInsertionError, "db insertion failed"),
 	DupliacteISRCError:    NewErrorResponse(http.StatusBadRequest, DupliacteISRCError, "duplicate record, isrc already exists"),
+	NoTrackExistsError:    NewErrorResponse(http.StatusNotFound, NoTrackExistsError, "no track found"),
 }
 
 func NewErrorResponse(statusCode int, errorCode ErrorCode, errorDescription string) *ErrorResponse {

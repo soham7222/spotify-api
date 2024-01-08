@@ -1,5 +1,5 @@
 package request
 
 type SaveSongRequest struct {
-	ISRC string `json:"isrc"`
+	ISRC string `json:"isrc" binding:"required"`
 }

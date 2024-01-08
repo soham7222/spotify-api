@@ -2,35 +2,42 @@ package middleware
 
 import (
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"spotify-api/config"
+	"strings"
 
-	simplejson "github.com/bitly/go-simplejson"
 	"github.com/gin-gonic/gin"
-	"github.com/parnurzeal/gorequest"
 )
 
-func AuthMiddleware(config config.Config, request *gorequest.SuperAgent) gin.HandlerFunc {
+func AuthMiddleware(config config.Config, client *http.Client) gin.HandlerFunc {
 	return func(context *gin.Context) {
-		bearerToken := fmt.Sprintf("Basic %s", getEncodedKeys(config))
-		request.Post(config.GetTokenIssuerUrl())
-		request.Set("Authorization", bearerToken)
-		request.Send("grant_type=client_credentials")
-
-		_, body, _ := request.End()
-
-		js, err := simplejson.NewJson([]byte(body))
+		req, err := http.NewRequest("POST",
+			config.GetTokenIssuerUrl(),
+			strings.NewReader("grant_type=client_credentials"))
 		if err != nil {
-			fmt.Println("[Authorize] Error parsing Json!")
+			fmt.Println("Error creating request:", err)
+			return
 		}
 
-		jsToken, exists := js.CheckGet("access_token")
-		if !exists {
-			fmt.Println("not working")
+		req.Header.Set("Authorization", fmt.Sprintf("Basic %s", getEncodedKeys(config)))
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+		resp, err := client.Do(req)
+		if err != nil {
+			fmt.Println("Error sending request:", err)
+			return
+		}
+		defer resp.Body.Close()
+
+		var tokenResp map[string]interface{}
+		if err := json.NewDecoder(resp.Body).Decode(&tokenResp); err != nil {
+			fmt.Println("Error decoding response body:", err)
+			return
 		}
 
-		token, _ := jsToken.String()
-		context.Request.Header.Add("Authorization", token)
+		context.Request.Header.Add("Authorization", tokenResp["access_token"].(string))
 		fmt.Println("User got authorised. Token has been issued and added to the Authorization header")
 		context.Next()
 	}

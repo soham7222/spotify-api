@@ -8,10 +8,9 @@ import (
 	"spotify-api/spotify/read/service"
 
 	"github.com/gin-gonic/gin"
-	"github.com/parnurzeal/gorequest"
 )
 
-func Init(r *gin.Engine, db *sql.DB, config config.Config, request *gorequest.SuperAgent) {
+func Init(r *gin.Engine, db *sql.DB, config config.Config) {
 	repository := repository.NewReadRepository(db)
 	service := service.NewReadService(repository)
 	controller := controller.NewReadController(service)
