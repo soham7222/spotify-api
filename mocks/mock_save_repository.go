@@ -6,7 +6,7 @@ package mocks
 
 import (
 	reflect "reflect"
-	dto "spotify-api/spotify/common/dto"
+	dto "spotify-api/dto"
 
 	gin "github.com/gin-gonic/gin"
 	gomock "github.com/golang/mock/gomock"

@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+//go:generate mockgen -source=spotify_client.go -destination=../mocks/mock_spotify_client.go -package=mocks
 type SpotifyClient interface {
 	FetchTrackDetailsBasedOnISRC(ctx *gin.Context, isrc string) (model.TracksSearchResponse, error)
 }

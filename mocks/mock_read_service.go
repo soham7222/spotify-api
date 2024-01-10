@@ -7,7 +7,7 @@ package mocks
 import (
 	reflect "reflect"
 	error "spotify-api/error"
-	model "spotify-api/spotify/read/model"
+	model "spotify-api/model"
 
 	gin "github.com/gin-gonic/gin"
 	gomock "github.com/golang/mock/gomock"
