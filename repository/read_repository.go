@@ -89,6 +89,5 @@ func serializeSqlRowData(rows *sql.Rows) ([]model.TrackDetailsResponse, error) {
 		return nil, err
 	}
 
-	fmt.Printf("result %v", result)
 	return result, nil
 }
