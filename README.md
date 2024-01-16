@@ -11,8 +11,6 @@ Follow this [documentation](https://collabnix.com/how-to-run-oracle-database-in-
 
 Please follow this [documentation](https://oralytics.com/2022/09/22/running-oracle-database-on-docker-on-apple-m1-chip/) to connect to database after the docker login.
 
-Also run the content from [sql_scripts/create_table.sql](https://github.com/soham7222/spotify-api/blob/main/sql_scripts/create_table.sql) in the docker with sql plus to generate the table schema. 
-
 ## Start Db
 
 Add your own oracle password in the make file to ``ORACLE_PASSWORD`` variable. Add the same into ``.envrc`` file in ``DB_PASSWORD`` value
@@ -20,6 +18,8 @@ Add your own oracle password in the make file to ``ORACLE_PASSWORD`` variable. A
 ```sh
 make start_db
 ```
+
+Also run the content from [sql_scripts/create_table.sql](https://github.com/soham7222/spotify-api/blob/main/sql_scripts/create_table.sql) in the docker with sql plus to generate the table schema. 
 
 ## Run test locally with coverage
 
